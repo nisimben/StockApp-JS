@@ -23,7 +23,8 @@ while(!exit){
         case "3":
             const operation =question(`Enter buy or sell :`);
             const identifier = question(`Enter name or id :`);
-            OperateOnStock(operation, identifier);
+            const stock = OperateOnStock(operation, identifier);
+            console.log(`stock`,stock);
 
             break;
         case "4":

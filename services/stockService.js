@@ -12,7 +12,7 @@ export function filterStocksByPrice(givenPrice, above){
     if (up) {
         return Object.values(stockDb['stocks']).filter((item) => givenPrice < item.currentPrice );
     } else {
-        return Object.values(stockDb['stocks']).filter((item) => givenPrice < item.currentPrice );
+        return Object.values(stockDb['stocks']).filter((item) => givenPrice > item.currentPrice );
     }
 }
 
@@ -22,18 +22,24 @@ export function OperateOnStock(operation, identifier){
         return;
         
     }
-    let stockCount = question(`how many stock to Buy  or Sell?`)
+    let stockCount = Number(question(`how many stock to Buy  or Sell?`))
     if (operation === "buy") {
-        let result = Object.values(stockDb['stocks']).filter((item) => identifier === item.id || identifier === item.name );
-        result[availableStocks] -= stockCount
+        let result = searchStock(identifier)
+        result.forEach((item) => {
+            item.availableStocks -= stockCount
+        })
+        return result
         }
 
     
     else if (operation ==="sell"){
-       let result = Object.values(stockDb['stocks']).filter((item) => identifier === item.id || identifier === item.name );
-        result[availableStocks] += stockCount
+        let result = searchStock(identifier)
+        result.forEach((item) => {
+            item.availableStocks += stockCount
+        })
+        return result
+        }
 
-    }
     else{
         console.log(`InValid operation`);
         return;
